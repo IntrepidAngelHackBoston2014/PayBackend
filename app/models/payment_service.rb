@@ -19,6 +19,10 @@ class PaymentService < ActiveRecord::Base
     self.for_code('cfrm').first
   end
 
+  def self.leaf
+    self.for_code('leaf').first
+  end
+
   def self.level_up
     self.for_code('lvup').first
   end

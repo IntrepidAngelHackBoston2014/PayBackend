@@ -18,6 +18,11 @@ Push DB
 
 heroku pg:push pay-backend_development DATABASE --remote staging
 
+Restart
+--------
+
+heroku restart --remote staging
+
 Places
 -------
 
@@ -36,6 +41,10 @@ Endpoints
 ---------
 
 List of Retailers
+
+LevelUp w/in 1 mile fo Leaf
+
+http://pay-backend-staging.herokuapp.com/retailers.json?codes=lvup
 
 Starbucks w/in 1 mile of Leaf HQ
 

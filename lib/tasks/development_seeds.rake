@@ -20,6 +20,7 @@ if Rails.env.development?
       DunkinDonutsDataLoader.new("development").load
       CumberlandFarmsDataLoader.new("development").load
       LevelUpDataLoader.new("development").load
+      LeafDataLoader.new("development").load
 
     end
   end
@@ -210,6 +211,44 @@ class CumberlandFarmsDataLoader
 
       Retailer.create(retailer_attributes)
     end
+    puts "Done!"
+  end
+
+  def strip(value)
+    if value
+      value.strip
+    else
+      ""
+    end
+  end
+end
+
+class LeafDataLoader
+  def initialize(environment)
+    @environment = environment
+    @payment_service = PaymentService.leaf
+  end
+
+  def load
+    puts "Loading #{@payment_service.name} retailers ..."
+
+    retailer_attributes = {
+                            store_number: "l-1",
+                            name: "Leaf HQ",
+                            address: "125 First Street",
+                            city: "Cambridge",
+                            state: "MA",
+                            zip_code: "02141",
+                            phone_number: "",
+                            store_hours: "",
+                            services: [],
+                            latitude: 42.366938,
+                            longitude: -71.0778098,
+                            payment_service: @payment_service
+                          }
+
+    Retailer.create(retailer_attributes)
+
     puts "Done!"
   end
 
