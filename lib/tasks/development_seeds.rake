@@ -34,25 +34,46 @@ class LevelUpDataLoader
   def load
     puts "Loading #{@payment_service.name} retailers ..."
 
-    # JSON.parse
+    location_json_file = File.read("db/data/levelup_locations.json")
+    levelup_locations = JSON.parse(location_json_file)
 
-    #   # retailer_attributes = {
-    #   #                         store_number: strip(row['Store Number']),
-    #   #                         name: strip(row['Store Location']),
-    #   #                         address: strip("#{strip(row['Address'])} #{strip(row['Address Line 2'])} #{strip(row['Address Line 3'])}"),
-    #   #                         city: strip(row['City']),
-    #   #                         state: strip(row['State']),
-    #   #                         zip_code: strip(row['Zip Code']),
-    #   #                         phone_number: strip(row['Phone Number']),
-    #   #                         store_hours: strip(row['Store Hours']),
-    #   #                         services: services.split(' | '),
-    #   #                         latitude: row['Latitude'].to_f,
-    #   #                         longitude: row['Longitude'].to_f,
-    #   #                         payment_service: @payment_service
-    #   #                       }
+    categories_json_file = File.read("db/data/levelup_categories.json")
+    levelup_categories = JSON.parse(categories_json_file)
 
-    #   # Retailer.create(retailer_attributes)
-    # end
+    levelup_categories_hash = {}
+    levelup_categories.each do |levelup_category|
+      id = levelup_category['category']['id']
+      name = levelup_category['category']['name']
+      levelup_categories_hash[id] = name
+    end
+
+    levelup_locations.each do |location_item|
+      location = location_item['location']
+
+      services = []
+
+      if location['merchant_name']
+
+        categories = location['categories'] || []
+
+        categories.each do |category_id|
+          services << levelup_categories_hash[category_id]
+        end
+
+        retailer_attributes = {
+                                store_number: location['id'],
+                                name: strip(location['merchant_name']),
+                                services: services,
+                                latitude: location['latitude'].to_f,
+                                longitude: location['longitude'].to_f,
+                                payment_service: @payment_service
+                              }
+
+        Retailer.create(retailer_attributes)
+
+      end
+    end
+
     puts "Done!"
   end
 
