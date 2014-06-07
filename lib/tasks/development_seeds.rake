@@ -21,6 +21,7 @@ if Rails.env.development?
       CumberlandFarmsDataLoader.new("development").load
       LevelUpDataLoader.new("development").load
       LeafDataLoader.new("development").load
+      BitCoinDataLoader.new("development").load
 
     end
   end
@@ -258,5 +259,46 @@ class LeafDataLoader
     else
       ""
     end
+  end
+end
+
+
+class BitCoinDataLoader
+  def initialize(environment)
+    @environment = environment
+    @payment_service = PaymentService.bitcoin
+  end
+
+  def load
+    puts "Loading #{@payment_service.name} retailers ..."
+
+    bitcoin_json_file = File.read("db/data/bitcoin.json")
+    bitcoin_locations = JSON.parse(bitcoin_json_file)
+
+    bitcoin_locations['elements'].each do |location|
+
+      services = []
+
+      if location['tags']
+
+        retailer_attributes = {
+                                store_number: location['id'],
+                                name: location['tags']['name'],
+                                address: "#{location['tags']['addr:housenumber']} #{location['tags']['addr:street']}",
+                                city: "#{location['tags']['addr:city']}",
+                                zip_code: "#{location['tags']['addr:postcode']}",
+                                phone_number: "#{location['tags']['phone']}",
+                                store_hours: "#{location['tags']['opening_hours']}",
+                                services: services,
+                                latitude: location['lat'].to_f,
+                                longitude: location['lon'].to_f,
+                                payment_service: @payment_service
+                              }
+
+        Retailer.create(retailer_attributes)
+      end
+    end
+
+    puts "Done!"
   end
 end
