@@ -6,6 +6,14 @@ class PaymentService < ActiveRecord::Base
   end
 
   def self.starbucks
-    PaymentService.for_code('sbux').first
+    self.for_code('sbux').first
+  end
+
+  def self.dunkin_donuts
+    self.for_code('dnkn').first
+  end
+
+  def self.cumberland_farms
+    self.for_code('cfrm').first
   end
 end
