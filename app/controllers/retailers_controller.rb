@@ -2,7 +2,7 @@ class RetailersController < ApplicationController
   respond_to :json
 
   def index
-    codes = params[:codes] || ['sbux']
+    codes = params[:codes] || 'sbux'
 
     // #Leaf HQ
     lat = params[:lat] ||  42.366938

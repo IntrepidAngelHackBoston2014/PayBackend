@@ -37,10 +37,14 @@ Endpoints
 
 List of Retailers
 
+Starbucks w/in 1 mile of Leaf HQ
+
+http://pay-backend-staging.herokuapp.com/retailers.json?codes=sbux
+
 Dunkin Donuts and Cumberland Farms w/in 2 mile box of Leaf HQ
 
-http://localhost:5000/retailers.json?codes=cfrm,dnkn&distance=2
+http://pay-backend-staging.herokuapp.com/retailers.json?codes=cfrm,dnkn&distance=2
 
 Starbucks w/in 1 mile of Seattle
 
-http://localhost:5000/retailers.json?codes=sbux&distance=1&lat=47.6094497&lon=-122.3418
+http://pay-backend-staging.herokuapp.com/retailers.json?codes=sbux&distance=1&lat=47.6094497&lon=-122.3418
