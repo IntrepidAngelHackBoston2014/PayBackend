@@ -1,6 +1,8 @@
 class PaymentService < ActiveRecord::Base
   has_many :retailers
 
+  SERVICE_CODES = %w("bpay cfrm coin dnkn leaf lvup ppal sbux").freeze
+
   def self.for_code(code)
     where("code = ?", code)
   end
@@ -15,5 +17,9 @@ class PaymentService < ActiveRecord::Base
 
   def self.cumberland_farms
     self.for_code('cfrm').first
+  end
+
+  def self.level_up
+    self.for_code('lvup').first
   end
 end

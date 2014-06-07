@@ -19,6 +19,48 @@ if Rails.env.development?
       StarbucksDataLoader.new("development").load
       DunkinDonutsDataLoader.new("development").load
       CumberlandFarmsDataLoader.new("development").load
+      LevelUpDataLoader.new("development").load
+
+    end
+  end
+end
+
+class LevelUpDataLoader
+  def initialize(environment)
+    @environment = environment
+    @payment_service = PaymentService.level_up
+  end
+
+  def load
+    puts "Loading #{@payment_service.name} retailers ..."
+
+    # JSON.parse
+
+    #   # retailer_attributes = {
+    #   #                         store_number: strip(row['Store Number']),
+    #   #                         name: strip(row['Store Location']),
+    #   #                         address: strip("#{strip(row['Address'])} #{strip(row['Address Line 2'])} #{strip(row['Address Line 3'])}"),
+    #   #                         city: strip(row['City']),
+    #   #                         state: strip(row['State']),
+    #   #                         zip_code: strip(row['Zip Code']),
+    #   #                         phone_number: strip(row['Phone Number']),
+    #   #                         store_hours: strip(row['Store Hours']),
+    #   #                         services: services.split(' | '),
+    #   #                         latitude: row['Latitude'].to_f,
+    #   #                         longitude: row['Longitude'].to_f,
+    #   #                         payment_service: @payment_service
+    #   #                       }
+
+    #   # Retailer.create(retailer_attributes)
+    # end
+    puts "Done!"
+  end
+
+  def strip(value)
+    if value
+      value.strip
+    else
+      ""
     end
   end
 end
