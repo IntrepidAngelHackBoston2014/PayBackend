@@ -6,7 +6,6 @@ class Retailer < ActiveRecord::Base
   reverse_geocoded_by :latitude, :longitude
   after_validation :geocode, :if => :has_location, :unless => :has_coordinates
 
-
   def full_street_address
     [address, city, state, zip_code].compact.join(', ')
   end
