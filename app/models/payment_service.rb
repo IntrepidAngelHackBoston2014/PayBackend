@@ -31,6 +31,10 @@ class PaymentService < ActiveRecord::Base
     self.for_code('lvup').first
   end
 
+  def self.pay_pal
+    self.for_code('ppal').first
+  end
+
   def self.starbucks
     self.for_code('sbux').first
   end

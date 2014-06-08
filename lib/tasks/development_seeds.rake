@@ -23,6 +23,7 @@ if Rails.env.development?
       LeafDataLoader.new("development").load
       BitCoinDataLoader.new("development").load
       BitPayDataLoader.new("development").load
+      PayPalDataLoader.new("development").load
 
     end
   end
@@ -263,7 +264,6 @@ class LeafDataLoader
   end
 end
 
-
 class BitCoinDataLoader
   def initialize(environment)
     @environment = environment
@@ -320,5 +320,46 @@ class BitPayDataLoader
     retailer.update_attribute(:payment_service, @payment_service)
 
     puts "Done!"
+  end
+end
+
+class PayPalDataLoader
+  def initialize(environment)
+    @environment = environment
+    @payment_service = PaymentService.pay_pal
+  end
+
+  def load
+    puts "Loading #{@payment_service.name} retailers ..."
+
+    CSV.foreach("db/data/paypal.csv", :headers => true) do |row|
+
+
+      retailer_attributes = {
+                              store_number: strip(row['Store Number']),
+                              name: strip(row['Name']),
+                              address: strip("#{strip(row['Address'])}"),
+                              city: strip(row['City']),
+                              state: strip(row['State']),
+                              zip_code: strip(row['Zip Code']),
+                              phone_number: strip(row['Phone Number']),
+                              services: [strip(row['Service'])],
+                              payment_service: @payment_service
+                            }
+
+      Retailer.create(retailer_attributes)
+
+      puts "Sleep for geocoder throttle ..."
+      sleep(3)
+    end
+    puts "Done!"
+  end
+
+  def strip(value)
+    if value
+      value.strip
+    else
+      ""
+    end
   end
 end
