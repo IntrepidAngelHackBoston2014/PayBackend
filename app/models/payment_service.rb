@@ -11,6 +11,10 @@ class PaymentService < ActiveRecord::Base
     self.for_code('coin').first
   end
 
+  def self.bitpay
+    self.for_code('bpay').first
+  end
+
   def self.cumberland_farms
     self.for_code('cfrm').first
   end

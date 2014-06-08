@@ -22,6 +22,7 @@ if Rails.env.development?
       LevelUpDataLoader.new("development").load
       LeafDataLoader.new("development").load
       BitCoinDataLoader.new("development").load
+      BitPayDataLoader.new("development").load
 
     end
   end
@@ -272,6 +273,9 @@ class BitCoinDataLoader
   def load
     puts "Loading #{@payment_service.name} retailers ..."
 
+    # http://overpass.osm.rambler.ru/cgi/interpreter?data=[out:json];(node["payment:bitcoin"=yes];>;way["payment:bitcoin"=yes];>;relation["payment:bitcoin"=yes];>;);out
+
+
     bitcoin_json_file = File.read("db/data/bitcoin.json")
     bitcoin_locations = JSON.parse(bitcoin_json_file)
 
@@ -298,6 +302,22 @@ class BitCoinDataLoader
         Retailer.create(retailer_attributes)
       end
     end
+
+    puts "Done!"
+  end
+end
+
+class BitPayDataLoader
+  def initialize(environment)
+    @environment = environment
+    @payment_service = PaymentService.bitpay
+  end
+
+  def load
+    puts "Update some BitCoin to be #{@payment_service.name} retailers ..."
+
+    retailer = Retailer.joins(:payment_service).where("store_number = ? and payment_services.code = 'coin'", "1413993833").first
+    retailer.update_attribute(:payment_service, @payment_service)
 
     puts "Done!"
   end
