@@ -1,10 +1,18 @@
 // Typography
 ///////////////////////////////////////////////////////////////////////////////
-$sans-serif: $helvetica;
-$serif: $georgia;
+// $sans-serif: $helvetica;
+// $serif: $georgia;
+
+// $base-font-family: $sans-serif;
+// $header-font-family: $serif;
+
+
+$sans-serif: 'Raleway', sans-serif;
+$serif: 'Bitter', serif;
 
 $base-font-family: $sans-serif;
-$header-font-family: $base-font-family;
+$header-font-family: $serif;
+
 
 // Sizes
 ///////////////////////////////////////////////////////////////////////////////

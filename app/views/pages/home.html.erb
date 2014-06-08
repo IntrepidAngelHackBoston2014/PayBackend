@@ -3,3 +3,11 @@
   <h2>Intrepid Labs</h2>
   <h3>AngelHack Boston 2014</h3>
 </section>
+
+<section>
+  <ul>
+    <li><%= link_to "Starbucks Near Intrepid Labs", retailers_path({codes: 'sbux', format: :json}) -%></li>
+    <li><%= link_to "Dunkin' Donuts Near Intrepid Labs", retailers_path({codes: 'dnkn', format: :json}) -%></li>
+    <li><%= link_to "PayPlay and BitPay Near Intrepid Labs", retailers_path({codes: 'bpay,ppal', format: :json}) -%></li>
+  </ul>
+</section>
