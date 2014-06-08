@@ -35,6 +35,10 @@ GEM
       multi_json
     arel (5.0.1.20140414130214)
     awesome_print (1.2.0)
+    bitters (0.9.5)
+      bourbon (>= 3.1)
+      sass (>= 3.2)
+      thor
     bourbon (3.2.3)
       sass (~> 3.2)
       thor
@@ -228,6 +232,7 @@ DEPENDENCIES
   active_model_serializers
   airbrake
   awesome_print
+  bitters
   bourbon (~> 3.2.1)
   capybara-webkit (>= 1.0.0)
   coffee-rails
@@ -244,7 +249,7 @@ DEPENDENCIES
   jquery-rails
   launchy
   multi_json (~> 1.10.1)
-  neat (~> 1.5.1)
+  neat
   newrelic_rpm (>= 3.7.3)
   oj (~> 2.9.4)
   pg
