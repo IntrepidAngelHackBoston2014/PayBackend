@@ -38,43 +38,60 @@ class LevelUpDataLoader
   def load
     puts "Loading #{@payment_service.name} retailers ..."
 
-    location_json_file = File.read("db/data/levelup_locations.json")
-    levelup_locations = JSON.parse(location_json_file)
 
-    categories_json_file = File.read("db/data/levelup_categories.json")
-    levelup_categories = JSON.parse(categories_json_file)
+    data_files = ["levelup_locations",
+                  "levelup_locations_2",
+                  "levelup_locations_3",
+                  "levelup_locations_4",
+                  "levelup_locations_5",
+                  "level_up_app_1", "level_up_app_2",
+                  "level_up_app_3", "level_up_app_5"]
 
-    levelup_categories_hash = {}
-    levelup_categories.each do |levelup_category|
-      id = levelup_category['category']['id']
-      name = levelup_category['category']['name']
-      levelup_categories_hash[id] = name
-    end
+    data_files.each do |data_file|
 
-    levelup_locations.each do |location_item|
-      location = location_item['location']
+      puts "Loading #{data_file} retailers ..."
 
-      services = []
+      location_json_file = File.read("db/data/#{data_file}.json")
+      levelup_locations = JSON.parse(location_json_file)
 
-      if location['merchant_name']
+      categories_json_file = File.read("db/data/levelup_categories.json")
+      levelup_categories = JSON.parse(categories_json_file)
 
-        categories = location['categories'] || []
+      levelup_categories_hash = {}
+      levelup_categories.each do |levelup_category|
+        id = levelup_category['category']['id']
+        name = levelup_category['category']['name']
+        levelup_categories_hash[id] = name
+      end
 
-        categories.each do |category_id|
-          services << levelup_categories_hash[category_id]
+      levelup_locations.each do |location_item|
+        location = location_item['location']
+
+        services = []
+
+        if location['merchant_name']
+
+          categories = location['categories'] || []
+
+          categories.each do |category_id|
+            services << levelup_categories_hash[category_id]
+          end
+
+          retailer_attributes = {
+                                  store_number: location['id'],
+                                  name: strip(location['merchant_name']),
+                                  services: services,
+                                  latitude: location['latitude'].to_f,
+                                  longitude: location['longitude'].to_f,
+                                  payment_service: @payment_service
+                                }
+
+          retailer = Retailer.find_or_initialize_by({store_number: location['id'].to_s,
+                                                    payment_service: @payment_service})
+
+          retailer.update_attributes(retailer_attributes)
+
         end
-
-        retailer_attributes = {
-                                store_number: location['id'],
-                                name: strip(location['merchant_name']),
-                                services: services,
-                                latitude: location['latitude'].to_f,
-                                longitude: location['longitude'].to_f,
-                                payment_service: @payment_service
-                              }
-
-        Retailer.create(retailer_attributes)
-
       end
     end
 
