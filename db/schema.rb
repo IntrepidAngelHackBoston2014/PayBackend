@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140607193452) do
+ActiveRecord::Schema.define(version: 20140608000649) do
 
   create_table "delayed_jobs", force: true do |t|
     t.integer  "priority",   default: 0, null: false
@@ -55,6 +55,7 @@ ActiveRecord::Schema.define(version: 20140607193452) do
     t.integer  "payment_service_id"
   end
 
+  add_index "retailers", ["latitude", "longitude"], name: "index_retailers_on_latitude_and_longitude", using: :btree
   add_index "retailers", ["payment_service_id"], name: "index_retailers_on_payment_service_id", using: :btree
 
 end

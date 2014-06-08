@@ -42,7 +42,11 @@ Endpoints
 
 List of Retailers
 
-LevelUp w/in 1 mile fo Leaf
+BitCoin w/in 3 miles of Leaf
+
+http://pay-backend-staging.herokuapp.com/retailers.json?codes=coin&distance=3
+
+LevelUp w/in 1 mile of Leaf
 
 http://pay-backend-staging.herokuapp.com/retailers.json?codes=lvup
 
