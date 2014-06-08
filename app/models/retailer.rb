@@ -4,6 +4,8 @@ class Retailer < ActiveRecord::Base
   geocoded_by :full_street_address
 
   reverse_geocoded_by :latitude, :longitude
+
+  after_validation :reverse_geocode, :if => :has_coordinates, :unless => :has_location
   after_validation :geocode, :if => :has_location, :unless => :has_coordinates
 
   def full_street_address

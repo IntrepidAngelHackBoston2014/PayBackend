@@ -19,11 +19,11 @@ if Rails.env.development?
       StarbucksDataLoader.new("development").load
       DunkinDonutsDataLoader.new("development").load
       CumberlandFarmsDataLoader.new("development").load
-      LevelUpDataLoader.new("development").load
       LeafDataLoader.new("development").load
       BitCoinDataLoader.new("development").load
       BitPayDataLoader.new("development").load
       PayPalDataLoader.new("development").load
+      LevelUpDataLoader.new("development").load
 
     end
   end
@@ -88,30 +88,48 @@ class LevelUpDataLoader
       levelup_locations.each do |location_item|
         location = location_item['location']
 
-        services = []
+        retailer = Retailer.find_or_initialize_by({store_number: location['id'].to_s,
+                                          payment_service: @payment_service})
 
-        if location['merchant_name']
+        unless retailer.name.present?
+          services = []
 
-          categories = location['categories'] || []
+          if location['merchant_name']
 
-          categories.each do |category_id|
-            services << levelup_categories_hash[category_id]
+            categories = location['categories'] || []
+
+            categories.each do |category_id|
+              services << levelup_categories_hash[category_id]
+            end
+
+            lat =   if location['latitude'].blank?
+                      nil
+                    else
+                      location['latitude'].to_f
+                    end
+            lon =   if location['longitude'].blank?
+                      nil
+                    else
+                      location['longitude'].to_f
+                    end
+
+            retailer_attributes = {
+                                    store_number: location['id'],
+                                    name: strip(location['merchant_name']),
+                                    services: services,
+                                    latitude: lat,
+                                    longitude: lon,
+                                    payment_service: @payment_service
+                                  }
+
+            retailer = Retailer.find_or_initialize_by({store_number: location['id'].to_s,
+                                                      payment_service: @payment_service})
+
+            retailer.update_attributes(retailer_attributes)
+
+            sleep(3)
+
           end
-
-          retailer_attributes = {
-                                  store_number: location['id'],
-                                  name: strip(location['merchant_name']),
-                                  services: services,
-                                  latitude: location['latitude'].to_f,
-                                  longitude: location['longitude'].to_f,
-                                  payment_service: @payment_service
-                                }
-
-          retailer = Retailer.find_or_initialize_by({store_number: location['id'].to_s,
-                                                    payment_service: @payment_service})
-
-          retailer.update_attributes(retailer_attributes)
-
         end
       end
     end
