@@ -44,8 +44,29 @@ class LevelUpDataLoader
                   "levelup_locations_3",
                   "levelup_locations_4",
                   "levelup_locations_5",
-                  "level_up_app_1", "level_up_app_2",
-                  "level_up_app_3", "level_up_app_5"]
+                  "level_up_app_1",
+                  "level_up_app_1_2",
+                  "level_up_app_1_3",
+                  "level_up_app_1_4",
+                  "level_up_app_1_5",
+                  "level_up_app_1_6",
+                  "level_up_app_1_7",
+                  "level_up_app_1_8",
+                  "level_up_app_1_9",
+                  "level_up_app_1_10",
+                  "level_up_app_1_11",
+                  "level_up_app_1_12",
+                  "level_up_app_1_13",
+                  "level_up_app_1_14",
+                  "level_up_app_1_15",
+                  "level_up_app_1_16",
+                  "level_up_app_1_17",
+                  "level_up_app_1_18",
+                  "level_up_app_1_19",
+                  "level_up_app_1_20",
+                  "level_up_app_2",
+                  "level_up_app_3",
+                  "level_up_app_5"]
 
     data_files.each do |data_file|
 
