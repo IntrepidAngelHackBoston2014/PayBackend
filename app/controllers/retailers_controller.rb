@@ -19,4 +19,9 @@ class RetailersController < ApplicationController
     respond_with(@retailers)
   end
 
+  def show
+    @retailer = Retailer.includes(:payment_service).find(params[:id])
+    respond_with(@retailer)
+  end
+
 end
