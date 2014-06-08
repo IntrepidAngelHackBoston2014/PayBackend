@@ -21,9 +21,9 @@ class RetailerSerializer < ActiveModel::Serializer
 
   def display_city
     if object.city.present? and object.state.present?
-        " #{object.city},"
+        "#{object.city},"
     elsif object.city.present?
-      " #{object.city}"
+      "#{object.city}"
     else
       ""
     end
