@@ -46,6 +46,10 @@ BitCoin w/in 3 miles of Leaf
 
 http://pay-backend-staging.herokuapp.com/retailers.json?codes=coin&distance=3
 
+BitPay w/in 3 miles of Leaf
+
+http://pay-backend-staging.herokuapp.com/retailers.json?codes=bpay&distance=3
+
 LevelUp w/in 1 mile of Leaf
 
 http://pay-backend-staging.herokuapp.com/retailers.json?codes=lvup
@@ -61,3 +65,7 @@ http://pay-backend-staging.herokuapp.com/retailers.json?codes=cfrm,dnkn&distance
 Starbucks w/in 1 mile of Seattle
 
 http://pay-backend-staging.herokuapp.com/retailers.json?codes=sbux&distance=1&lat=47.6094497&lon=-122.3418
+
+PayPal near Intrpeid
+
+http://pay-backend-staging.herokuapp.com/retailers.json?codes=ppal
